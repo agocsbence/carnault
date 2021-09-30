@@ -1,10 +1,16 @@
 <script type="text/javascript">
 
 var selected1 = document.querySelector('#c-selected-1');
-var colors1 = document.getElementsByClassName('picker-color');
+var selected2 = document.querySelector('#c-selected-2');
+var colors1 = document.getElementsByClassName('picker-color-1');
+var colors2 = document.getElementsByClassName('picker-color-2');
 var i;
+var j;
 
 selected1.addEventListener('click', function() {
+    this.classList.toggle('opened');
+});
+selected2.addEventListener('click', function() {
     this.classList.toggle('opened');
 });
 
@@ -18,10 +24,26 @@ for(i=0; i<colors1.length; i++) {
     })
 }
 
+for(j=0; j<colors2.length; j++) {
+    colors2[j].addEventListener('click', function() {
+        var bg = this.dataset.bg;
+        var clickedIndex = this.id.substr(this.id.length - 1);
+        selected2.style.background = 'url(' + bg + ')';
+        selected2.classList.remove('opened');
+        batterySwiper2.slideTo(clickedIndex, 400, true);
+    })
+}
+
 batterySwiper1.on('activeIndexChange', function() {
     var activeIndex = this.activeIndex;
     var activeSlide = document.querySelector('#c-1-'+activeIndex);
     selected1.style.background = 'url(' + activeSlide.dataset.bg + ')';
+})
+
+batterySwiper2.on('activeIndexChange', function() {
+    var activeIndex = this.activeIndex;
+    var activeSlide = document.querySelector('#c-2-'+activeIndex);
+    selected2.style.background = 'url(' + activeSlide.dataset.bg + ')';
 })
 
 </script>

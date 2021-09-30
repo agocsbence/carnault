@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="sub">Webshop</h1>
+    </div>
+    <section class="pb-4 noborder">
+        <div class="container">
+            <h1 class="mb-2">Nicotine?</h1>
+            <div class="grid grid-2 mb-2">
+                <a href="" class="btn btn-active">Carnault 1.</a>
+                <a href="" class="btn">Carnault 2.</a>
+            </div>
+            <div class="flex flex-row flex-space-between flex-row-center my-2">
+                <div class="status">Nicotine</div>
+                <div class="switcher flex">
+                    <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+                </div>
+            </div>
+            <div class="range my-1">
+                <div>personal demand</div>
+                <div class="range-slider my-1">
+                    <input type="range" name="f_range" id="f_range" min="0" max="100" value="0" step="10">
+                </div>
+                <div class="flex flex-row">
+                    <div id="rangeValue">0</div>
+                    <span>%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        var rangeValue = document.getElementById('f_range');
+        var output = document.getElementById('rangeValue');
+        
+        rangeValue.oninput = function() {
+            output.innerHTML = this.value;
+        }
+    </script>
+{% endblock %}
