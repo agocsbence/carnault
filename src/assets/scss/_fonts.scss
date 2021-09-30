@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'NHaasGrotesk-Regular';
+    src: url('fonts/NHaasGroteskTXPro-55Rg.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NHaasGrotesk-Medium';
+    src: url('fonts/NHaasGroteskTXPro-65Md.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'NHaasGrotesk-Bold';
+    src: url('fonts/NHaasGroteskTXPro-75Bd.ttf') format('truetype');
+}
+
+.font-500 {
+    font-family: 'NHaasGrotesk-Regular', sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-600 {
+    font-family: 'NHaasGrotesk-Medium', sans-serif;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.font-700 {
+    font-family: 'NHaasGrotesk-Bold', sans-serif;
+    font-weight: bolder;
+    font-style: normal;
+}

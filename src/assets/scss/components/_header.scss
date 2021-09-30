@@ -1,0 +1,72 @@
+header {
+    font-family: 'NHaasGrotesk-Medium', sans-serif;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid $white;
+    .logo {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .header-content {
+        justify-content: flex-end;
+        align-items: center;
+        .cart {
+            margin-right: 1rem;
+        }
+        .hamburger {
+            width: 30px;
+            height: 17px;
+            border: 0;
+            border-radius: 0;
+            padding: 0;
+            position: relative;
+            background: transparent;
+            &.is-active {
+                .hamburger-inner {
+                    transform: translate3d(0, -10px, 0) rotate(-45deg) !important;
+                }
+                .hamburger-inner:before {
+                    top: 0 !important;
+                    transform: rotate(-90deg) !important;
+                }
+                .hamburger-inner:after {
+                    top: 0 !important;
+                    opacity: 0 !important;
+                }
+            }
+            .hamburger-box {
+                display: inline-block;
+                vertical-align: middle;
+                width: 30px;
+                height: 17px;
+                .hamburger-inner {
+                    display: block;
+                    top: auto;
+                    bottom: 0;
+                    position: absolute;
+                    width: 30px;
+                    height: 3px;
+                    border-radius: 0;
+                    background-color: $white;
+                    &:before,
+                    &:after {
+                        content: "";
+                        display: block;
+                        position: absolute;
+                        width: 30px;
+                        height: 3px;
+                        border-radius: 0;
+                        background-color: $white;
+                    }
+                    &:before {
+                        top: -7px;
+                    }
+                    &:after {
+                        top: -14px;
+                    }
+                }
+            }
+        }
+    }
+}
