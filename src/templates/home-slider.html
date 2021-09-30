@@ -1,0 +1,56 @@
+<section id="home-slider">
+    <div class="swiper homeSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images/carnault-1.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-2.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-3.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-4.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-5.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-6.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-7.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-8.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-9.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-10.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var swiper = new Swiper(".homeSwiper", {
+        slidesPerView: 5,
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+            delay: 10,
+            disableOnInteraction: false,
+        },
+        speed: 6000,
+    });
+
+    var packageSwiper = new Swiper(".packageSwiper", {
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        centeredSlides: true,
+    });
+</script>

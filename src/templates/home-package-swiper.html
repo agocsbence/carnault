@@ -1,0 +1,21 @@
+<section id="packageSwiper" class="mobile-only">
+    <div class="swiper packageSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images/slider-1.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/slider-2.jpg" alt="">
+            </div>
+        </div>
+        <div class="swiper-pagination swiper-pagination-white"></div>
+    </div>
+</section>
+<script type="text/javascript">
+    var packageSwiper = new Swiper(".packageSwiper", {
+        pagination: {
+            el: ".swiper-pagination",
+        },
+        centeredSlides: true,
+    });
+</script>

@@ -1,200 +1,123 @@
-const gulp = require('gulp'),
-    sass = require('gulp-sass')(require('node-sass')),
-    postcss = require('gulp-postcss'),
-    autoprefixer = require('autoprefixer'),
-    cssnano = require('cssnano'),
-    minify = require('gulp-minify'),
-    concat = require('gulp-concat'),
-    imagemin = require('gulp-imagemin'),
-    cachebust = require('gulp-cache-bust');
+const gulp = require("gulp");
+const { parallel, series } = require("gulp");
 
-var realFavicon = require('gulp-real-favicon');
-var fs = require('fs');
-var FAVICON_DATA_FILE = 'faviconData.json'; // File where the favicon markups are stored
+const imagemin = require("gulp-imagemin");
+const htmlmin = require("gulp-htmlmin");
+const uglify = require("gulp-uglify");
+const sass = require('gulp-sass')(require('sass'));
+const concat = require("gulp-concat");
+const browserSync = require("browser-sync").create(); //https://browsersync.io/docs/gulp#page-top
+const nunjucksRender = require("gulp-nunjucks-render");
+const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
 
-sass.compiler = require('node-sass');
+// /*
+// TOP LEVEL FUNCTIONS
+//     gulp.task = Define tasks
+//     gulp.src = Point to files to use
+//     gulp.dest = Points to the folder to output
+//     gulp.watch = Watch files and folders for changes
+// */
 
-gulp.task('styles', function() {
-    var processors = [
-        autoprefixer(),
-        cssnano({ zindex: false })
-    ];
-    return gulp.src('src/assets/scss/style.scss')
-        .pipe(sass().on('error', sass.logError))
-        // .pipe(postcss(processors))
-        .pipe(cachebust({ type: 'timestamp' }))
-        .pipe(gulp.dest('dist/assets/css/'));
-});
-
-gulp.task('imagemin', async function() {
-    gulp.src('./src/assets/img/**/*')
+// Optimise Images
+function imageMin(cb) {
+    gulp.src("src/assets/images/**/*")
         .pipe(imagemin())
-        .pipe(gulp.dest('./dist/assets/img'))
-});
+        .pipe(gulp.dest("dist/images"));
+    cb();
+}
 
-gulp.task('fonts', function() {
-    return gulp.src('src/assets/fonts/*')
-        .pipe(gulp.dest('dist/assets/fonts/'));
-});
+// Copy all HTML files to Dist
+function copyHTML(cb) {
+    gulp.src("src/*.html").pipe(gulp.dest("dist"));
+    cb();
+}
 
-gulp.task('favicon', function() {
-    return gulp.src('src/assets/icon/*')
-        .pipe(gulp.dest('dist/assets/icon/'));
-});
+// Minify HTML
+function minifyHTML(cb) {
+    gulp.src("src/*.html")
+        .pipe(gulp.dest("dist"))
+        .pipe(
+            htmlmin({
+                collapseWhitespace: true
+            })
+        )
+        .pipe(gulp.dest("dist"));
+    cb();
+}
 
-gulp.task('scripts', function() {
-    return gulp.src('src/assets/js/**/*.js')
-        .pipe(concat('scripts.js'))
-        .pipe(minify())
-        .pipe(gulp.dest('dist/assets/js'))
-});
+// Scripts
+function js(cb) {
+    gulp.src("src/assets/js/*js")
+        .pipe(babel({
+            presets: ['@babel/preset-env']
+        }))
+        .pipe(concat("main.js"))
+        .pipe(uglify())
+        .pipe(gulp.dest("dist/js"));
+    cb();
+}
 
-gulp.task('copyScripts', function() {
-    return gulp.src('src/assets/js/**/*.js')
-        .pipe(gulp.dest('dist/assets/js'))
-});
+// Compile Sass
+function css(cb) {
+    gulp.src("src/assets/sass/*.scss")
+        .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
+        .pipe(autoprefixer({
+            browserlist: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(gulp.dest("dist/css"))
+        // Stream changes to all browsers
+        .pipe(browserSync.stream());
+    cb();
+}
 
-gulp.task('copyCSS', function() {
-    return gulp.src('src/assets/css/*.css')
-        .pipe(gulp.dest('dist/assets/css/'));
-});
+// Process Nunjucks
+function nunjucks(cb) {
+    gulp.src("src/pages/*.html")
+        .pipe(
+            nunjucksRender({
+                path: ["src/templates/"] // String or Array
+            })
+        )
+        .pipe(gulp.dest("dist"));
+    cb();
+}
 
-gulp.task('copyHTML', function() {
-    return gulp.src('src/**/*.html')
-        .pipe(gulp.dest('dist/'));
-});
+function nunjucksMinify(cb) {
+    gulp.src("src/pages/*.html")
+        .pipe(
+            nunjucksRender({
+                path: ["src/templates/"] // String or Array
+            })
+        )
+        .pipe(
+            htmlmin({
+                collapseWhitespace: true
+            })
+        )
+        .pipe(gulp.dest("dist"));
+    cb();
+}
 
-gulp.task('copyPHP', function() {
-    return gulp.src('src/**/*.php')
-        .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('copyWPimage', function() {
-    return gulp.src('src/*.png')
-        .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('copyWPstyle', function() {
-    return gulp.src('src/style.css')
-        .pipe(gulp.dest('dist/'));
-});
-
-gulp.task('icons', function() {
-    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
-        .pipe(gulp.dest('dist/assets/webfonts/'));
-});
-
-gulp.task('watch', function() {
-    gulp.watch('./src/assets/scss/**/*.scss', gulp.series('styles'));
-    console.log('gulp is watching for SCSS changes 👀');
-    gulp.watch('./src/**/*.html', gulp.series('copyHTML'));
-    console.log('gulp is watching for changes in HTML files ⌨️');
-    gulp.watch('./src/assets/js/**/*.js', gulp.series('copyScripts'));
-    console.log('gulp is watching for changes in Javascript files ⌨️');
-    return
-});
-gulp.task('watchWP', function() {
-    gulp.watch('./src/assets/scss/**/*.scss', gulp.series('styles'));
-    console.log('gulp is watching for SCSS changes 👀');
-    gulp.watch('./src/**/*.php', gulp.series('copyPHP'));
-    console.log('gulp is watching for changes in PHP files ⌨️');
-    gulp.watch('./src/assets/js/**/*.js', gulp.series('scripts'));
-    console.log('gulp is watching for changes in Javascript files ⌨️');
-    return
-});
-
-gulp.task('wordpress', gulp.series('copyWPimage', 'copyWPstyle', 'copyPHP', 'watchWP'));
-gulp.task('default', gulp.series('imagemin', 'icons', 'fonts', 'copyHTML', 'copyPHP', 'copyCSS', 'copyScripts', 'styles', 'watch'));
-
-// Generate the icons. This task takes a few seconds to complete.
-// You should run it at least once to create the icons. Then,
-// you should run it whenever RealFaviconGenerator updates its
-// package (see the check-for-favicon-update task below).
-gulp.task('generate-favicon', function(done) {
-    realFavicon.generateFavicon({
-        masterPicture: './src/assets/icon/favicon.png',
-        dest: './src/assets/icon/',
-        iconsPath: '/',
-        design: {
-            ios: {
-                pictureAspect: 'backgroundAndMargin',
-                backgroundColor: '#ffffff',
-                margin: '14%',
-                assets: {
-                    ios6AndPriorIcons: false,
-                    ios7AndLaterIcons: true,
-                    precomposedIcons: false,
-                    declareOnlyDefaultIcon: true
-                }
-            },
-            desktopBrowser: {
-                design: 'raw'
-            },
-            windows: {
-                pictureAspect: 'noChange',
-                backgroundColor: '#ffffff',
-                onConflict: 'override',
-                assets: {
-                    windows80Ie10Tile: false,
-                    windows10Ie11EdgeTiles: {
-                        small: false,
-                        medium: true,
-                        big: false,
-                        rectangle: false
-                    }
-                }
-            },
-            androidChrome: {
-                pictureAspect: 'shadow',
-                themeColor: '#ffffff',
-                manifest: {
-                    name: 'Igazinő',
-                    display: 'standalone',
-                    orientation: 'notSet',
-                    onConflict: 'override',
-                    declared: true
-                },
-                assets: {
-                    legacyIcon: false,
-                    lowResolutionIcons: false
-                }
-            },
-            safariPinnedTab: {
-                pictureAspect: 'silhouette',
-                themeColor: '#f2f2f2'
-            }
-        },
-        settings: {
-            scalingAlgorithm: 'Mitchell',
-            errorOnImageTooSmall: false,
-            readmeFile: false,
-            htmlCodeFile: true,
-            usePathAsIs: false
-        },
-        markupFile: FAVICON_DATA_FILE
-    }, function() {
-        done();
-    });
-});
-
-// Inject the favicon markups in your HTML pages. You should run
-// this task whenever you modify a page. You can keep this task
-// as is or refactor your existing HTML pipeline.
-gulp.task('inject-favicon-markups', function() {
-    return gulp.src(['./src/components.html'])
-        .pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
-        .pipe(gulp.dest('./dist/'));
-});
-
-// Check for updates on RealFaviconGenerator (think: Apple has just
-// released a new Touch icon along with the latest version of iOS).
-// Run this task from time to time. Ideally, make it part of your
-// continuous integration system.
-gulp.task('check-for-favicon-update', function(done) {
-    var currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
-    realFavicon.checkForUpdates(currentVersion, function(err) {
-        if (err) {
-            throw err;
+// Watch Files
+function watch_files() {
+    browserSync.init({
+        server: {
+            baseDir: "dist/"
         }
     });
-});
+    gulp.watch("src/assets/sass/**/*.scss", css);
+    gulp.watch("src/assets/js/*.js", js).on("change", browserSync.reload);
+    gulp.watch("src/pages/*.html", nunjucks).on("change", browserSync.reload);
+    gulp.watch("src/templates/*.html", nunjucks).on(
+        "change",
+        browserSync.reload
+    );
+}
+
+// Default 'gulp' command with start local server and watch files for changes.
+exports.default = series(nunjucks, css, js, imageMin, watch_files);
+
+// 'gulp build' will build all assets but not run on a local server.
+exports.build = parallel(nunjucksMinify, css, js, imageMin);
