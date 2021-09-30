@@ -1,106 +1,200 @@
-// Initialize modules
-// Importing specific gulp API functions lets us write them below as series() instead of gulp.series()
-const { src, dest, watch, series, parallel } = require('gulp');
-// Importing all the Gulp-related packages we want to use
-const sass = require('gulp-sass')(require('sass'));
-const concat = require('gulp-concat');
-const terser = require('gulp-terser');
-const postcss = require('gulp-postcss');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const replace = require('gulp-replace');
-const browsersync = require('browser-sync').create();
+const gulp = require('gulp'),
+    sass = require('gulp-sass')(require('node-sass')),
+    postcss = require('gulp-postcss'),
+    autoprefixer = require('autoprefixer'),
+    cssnano = require('cssnano'),
+    minify = require('gulp-minify'),
+    concat = require('gulp-concat'),
+    imagemin = require('gulp-imagemin'),
+    cachebust = require('gulp-cache-bust');
 
-// File paths
-const files = {
-	scssPath: 'app/scss/**/*.scss',
-	jsPath: 'app/js/**/*.js',
-};
+var realFavicon = require('gulp-real-favicon');
+var fs = require('fs');
+var FAVICON_DATA_FILE = 'faviconData.json'; // File where the favicon markups are stored
 
-// Sass task: compiles the style.scss file into style.css
-function scssTask() {
-	return src(files.scssPath, { sourcemaps: true }) // set source and turn on sourcemaps
-		.pipe(sass()) // compile SCSS to CSS
-		.pipe(postcss([autoprefixer(), cssnano()])) // PostCSS plugins
-		.pipe(dest('dist', { sourcemaps: '.' })); // put final CSS in dist folder with sourcemap
-}
+sass.compiler = require('node-sass');
 
-// JS task: concatenates and uglifies JS files to script.js
-function jsTask() {
-	return src(
-		[
-			files.jsPath,
-			//,'!' + 'includes/js/jquery.min.js', // to exclude any specific files
-		],
-		{ sourcemaps: true }
-	)
-		.pipe(concat('all.js'))
-		.pipe(terser())
-		.pipe(dest('dist', { sourcemaps: '.' }));
-}
+gulp.task('styles', function() {
+    var processors = [
+        autoprefixer(),
+        cssnano({ zindex: false })
+    ];
+    return gulp.src('src/assets/scss/style.scss')
+        .pipe(sass().on('error', sass.logError))
+        // .pipe(postcss(processors))
+        .pipe(cachebust({ type: 'timestamp' }))
+        .pipe(gulp.dest('dist/assets/css/'));
+});
 
-// Cachebust
-function cacheBustTask() {
-	var cbString = new Date().getTime();
-	return src(['index.html'])
-		.pipe(replace(/cb=\d+/g, 'cb=' + cbString))
-		.pipe(dest('.'));
-}
+gulp.task('imagemin', async function() {
+    gulp.src('./src/assets/img/**/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('./dist/assets/img'))
+});
 
-// Browsersync to spin up a local server
-function browserSyncServe(cb) {
-	// initializes browsersync server
-	browsersync.init({
-		server: {
-			baseDir: '.',
-		},
-		notify: {
-			styles: {
-				top: 'auto',
-				bottom: '0',
-			},
-		},
-	});
-	cb();
-}
-function browserSyncReload(cb) {
-	// reloads browsersync server
-	browsersync.reload();
-	cb();
-}
+gulp.task('fonts', function() {
+    return gulp.src('src/assets/fonts/*')
+        .pipe(gulp.dest('dist/assets/fonts/'));
+});
 
-// Watch task: watch SCSS and JS files for changes
-// If any change, run scss and js tasks simultaneously
-function watchTask() {
-	watch(
-		[files.scssPath, files.jsPath],
-		{ interval: 1000, usePolling: true }, //Makes docker work
-		series(parallel(scssTask, jsTask), cacheBustTask)
-	);
-}
+gulp.task('favicon', function() {
+    return gulp.src('src/assets/icon/*')
+        .pipe(gulp.dest('dist/assets/icon/'));
+});
 
-// Browsersync Watch task
-// Watch HTML file for change and reload browsersync server
-// watch SCSS and JS files for changes, run scss and js tasks simultaneously and update browsersync
-function bsWatchTask() {
-	watch('index.html', browserSyncReload);
-	watch(
-		[files.scssPath, files.jsPath],
-		{ interval: 1000, usePolling: true }, //Makes docker work
-		series(parallel(scssTask, jsTask), cacheBustTask, browserSyncReload)
-	);
-}
+gulp.task('scripts', function() {
+    return gulp.src('src/assets/js/**/*.js')
+        .pipe(concat('scripts.js'))
+        .pipe(minify())
+        .pipe(gulp.dest('dist/assets/js'))
+});
 
-// Export the default Gulp task so it can be run
-// Runs the scss and js tasks simultaneously
-// then runs cacheBust, then watch task
-exports.default = series(parallel(scssTask, jsTask), cacheBustTask, watchTask);
+gulp.task('copyScripts', function() {
+    return gulp.src('src/assets/js/**/*.js')
+        .pipe(gulp.dest('dist/assets/js'))
+});
 
-// Runs all of the above but also spins up a local Browsersync server
-// Run by typing in "gulp bs" on the command line
-exports.bs = series(
-	parallel(scssTask, jsTask),
-	cacheBustTask,
-	browserSyncServe,
-	bsWatchTask
-);
+gulp.task('copyCSS', function() {
+    return gulp.src('src/assets/css/*.css')
+        .pipe(gulp.dest('dist/assets/css/'));
+});
+
+gulp.task('copyHTML', function() {
+    return gulp.src('src/**/*.html')
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copyPHP', function() {
+    return gulp.src('src/**/*.php')
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copyWPimage', function() {
+    return gulp.src('src/*.png')
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('copyWPstyle', function() {
+    return gulp.src('src/style.css')
+        .pipe(gulp.dest('dist/'));
+});
+
+gulp.task('icons', function() {
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
+        .pipe(gulp.dest('dist/assets/webfonts/'));
+});
+
+gulp.task('watch', function() {
+    gulp.watch('./src/assets/scss/**/*.scss', gulp.series('styles'));
+    console.log('gulp is watching for SCSS changes 👀');
+    gulp.watch('./src/**/*.html', gulp.series('copyHTML'));
+    console.log('gulp is watching for changes in HTML files ⌨️');
+    gulp.watch('./src/assets/js/**/*.js', gulp.series('copyScripts'));
+    console.log('gulp is watching for changes in Javascript files ⌨️');
+    return
+});
+gulp.task('watchWP', function() {
+    gulp.watch('./src/assets/scss/**/*.scss', gulp.series('styles'));
+    console.log('gulp is watching for SCSS changes 👀');
+    gulp.watch('./src/**/*.php', gulp.series('copyPHP'));
+    console.log('gulp is watching for changes in PHP files ⌨️');
+    gulp.watch('./src/assets/js/**/*.js', gulp.series('scripts'));
+    console.log('gulp is watching for changes in Javascript files ⌨️');
+    return
+});
+
+gulp.task('wordpress', gulp.series('copyWPimage', 'copyWPstyle', 'copyPHP', 'watchWP'));
+gulp.task('default', gulp.series('imagemin', 'icons', 'fonts', 'copyHTML', 'copyPHP', 'copyCSS', 'copyScripts', 'styles', 'watch'));
+
+// Generate the icons. This task takes a few seconds to complete.
+// You should run it at least once to create the icons. Then,
+// you should run it whenever RealFaviconGenerator updates its
+// package (see the check-for-favicon-update task below).
+gulp.task('generate-favicon', function(done) {
+    realFavicon.generateFavicon({
+        masterPicture: './src/assets/icon/favicon.png',
+        dest: './src/assets/icon/',
+        iconsPath: '/',
+        design: {
+            ios: {
+                pictureAspect: 'backgroundAndMargin',
+                backgroundColor: '#ffffff',
+                margin: '14%',
+                assets: {
+                    ios6AndPriorIcons: false,
+                    ios7AndLaterIcons: true,
+                    precomposedIcons: false,
+                    declareOnlyDefaultIcon: true
+                }
+            },
+            desktopBrowser: {
+                design: 'raw'
+            },
+            windows: {
+                pictureAspect: 'noChange',
+                backgroundColor: '#ffffff',
+                onConflict: 'override',
+                assets: {
+                    windows80Ie10Tile: false,
+                    windows10Ie11EdgeTiles: {
+                        small: false,
+                        medium: true,
+                        big: false,
+                        rectangle: false
+                    }
+                }
+            },
+            androidChrome: {
+                pictureAspect: 'shadow',
+                themeColor: '#ffffff',
+                manifest: {
+                    name: 'Igazinő',
+                    display: 'standalone',
+                    orientation: 'notSet',
+                    onConflict: 'override',
+                    declared: true
+                },
+                assets: {
+                    legacyIcon: false,
+                    lowResolutionIcons: false
+                }
+            },
+            safariPinnedTab: {
+                pictureAspect: 'silhouette',
+                themeColor: '#f2f2f2'
+            }
+        },
+        settings: {
+            scalingAlgorithm: 'Mitchell',
+            errorOnImageTooSmall: false,
+            readmeFile: false,
+            htmlCodeFile: true,
+            usePathAsIs: false
+        },
+        markupFile: FAVICON_DATA_FILE
+    }, function() {
+        done();
+    });
+});
+
+// Inject the favicon markups in your HTML pages. You should run
+// this task whenever you modify a page. You can keep this task
+// as is or refactor your existing HTML pipeline.
+gulp.task('inject-favicon-markups', function() {
+    return gulp.src(['./src/components.html'])
+        .pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
+        .pipe(gulp.dest('./dist/'));
+});
+
+// Check for updates on RealFaviconGenerator (think: Apple has just
+// released a new Touch icon along with the latest version of iOS).
+// Run this task from time to time. Ideally, make it part of your
+// continuous integration system.
+gulp.task('check-for-favicon-update', function(done) {
+    var currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
+    realFavicon.checkForUpdates(currentVersion, function(err) {
+        if (err) {
+            throw err;
+        }
+    });
+});
