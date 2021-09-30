@@ -1,0 +1,21 @@
+<script type="text/javascript">
+
+var selected1 = document.querySelector('#c-selected-1');
+var colors1 = document.getElementsByClassName('picker-color');
+var i;
+
+selected1.addEventListener('click', function() {
+    this.classList.toggle('opened');
+});
+
+for(i=0; i<colors1.length; i++) {
+    colors1[i].addEventListener('click', function() {
+        var bg = this.dataset.bg;
+        var clickedIndex = this.id.substr(this.id.length - 1)
+        selected1.style.background = 'url(' + bg + ')';
+        selected1.classList.remove('opened');
+        batterySwiper1.slideTo(clickedIndex, 400, true);
+    })
+}
+
+</script>

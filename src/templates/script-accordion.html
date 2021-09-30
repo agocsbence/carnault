@@ -1,0 +1,16 @@
+<script>
+    var accordionToggle = document.getElementsByClassName('accordion-header');
+    var i;
+
+    for (i = 0; i < accordionToggle.length; i++) {
+        accordionToggle[i].addEventListener('click', function() {
+            var icon = this.getElementsByTagName('span');
+            this.classList.toggle('opened');
+            if(this.classList.contains('opened')) {
+                icon[0].innerHTML = '-';
+            } else {
+                icon[0].innerHTML = '+';
+            }
+        });
+    }
+</script>

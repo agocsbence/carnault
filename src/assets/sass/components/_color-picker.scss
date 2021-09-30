@@ -1,0 +1,43 @@
+.battery-color-picker-wrapper {
+    position: relative;
+    .battery-color-picker-icon {
+        .color-picker-colors {
+            position: absolute;
+            bottom: 73px;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: $black;
+            z-index: 9;
+            display: none;
+            .picker-color {
+                width: 41px;
+                height: 41px;
+                border-radius: 50%;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        }
+        .color-picker-selected {
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border: 1px solid $white;
+            width: 41px;
+            height: 41px;
+            border-radius: 50%;
+            &.opened {
+                &+.color-picker-colors {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.grid-color-picker {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}

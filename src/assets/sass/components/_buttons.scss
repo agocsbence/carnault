@@ -6,13 +6,13 @@
     background: $black;
     box-sizing: border-box;
     border-radius: 29px;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding: .2rem 0;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    &:hover {
+    &:hover,
+    &.btn-active {
         color: $black;
         background: $white;
     }
