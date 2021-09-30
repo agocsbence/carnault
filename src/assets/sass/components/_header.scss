@@ -70,3 +70,28 @@ header {
         }
     }
 }
+
+nav {
+    height: calc(100vh - 61px);
+    position: relative;
+    display: none !important;
+    visibility: hidden;
+    margin-top: -100vh;
+    transition: all .3s ease;
+    &.opened {
+        margin-top: 0;
+        display: block !important;
+        visibility: visible;
+    }
+    .mobile-header-menu {
+        font-size: 45px;
+        line-height: 1.5;
+    }
+    .mobile-social-links {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        border-top: 1px solid $white;
+    }
+}
