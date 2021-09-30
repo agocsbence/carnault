@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="sub">Contact Us</h1>
+    </div>
+    <section class="pb-4 noborder">
+        <div class="container">
+            <div class="grid grid-1-2">
+                <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores.</p>
+                <div class="form">
+                    <form action="">
+                        <input type="text" placeholder="Name">
+                        <input type="text" placeholder="Email">
+                        <input type="text" placeholder="Phone">
+                        <textarea name="message" id="" cols="30" rows="10" placeholder="Text"></textarea>
+                        <input type="submit" value="Contact Us" class="btn mt-1">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include "script-accordion.html" %}
+{% endblock %}

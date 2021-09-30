@@ -16,6 +16,12 @@
             grid-template-columns: 1fr 1fr;
         }
     }
+    &.grid-1-2 {
+        grid-template-columns: 1fr;
+        @media screen and (min-width: $tablet) {
+            grid-template-columns: 1fr 2fr;
+        }
+    }
     &.grid-m-1 {
         @media screen and (max-width: $tablet) {
             grid-template-columns: 1fr;
