@@ -11,11 +11,17 @@ selected1.addEventListener('click', function() {
 for(i=0; i<colors1.length; i++) {
     colors1[i].addEventListener('click', function() {
         var bg = this.dataset.bg;
-        var clickedIndex = this.id.substr(this.id.length - 1)
+        var clickedIndex = this.id.substr(this.id.length - 1);
         selected1.style.background = 'url(' + bg + ')';
         selected1.classList.remove('opened');
         batterySwiper1.slideTo(clickedIndex, 400, true);
     })
 }
+
+batterySwiper1.on('activeIndexChange', function() {
+    var activeIndex = this.activeIndex;
+    var activeSlide = document.querySelector('#c-1-'+activeIndex);
+    selected1.style.background = 'url(' + activeSlide.dataset.bg + ')';
+})
 
 </script>
