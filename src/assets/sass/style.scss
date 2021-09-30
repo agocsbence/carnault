@@ -1,7 +1,7 @@
 $black: #000;
 $white: #fff;
 $font-size: 14px;
-$font-size-mobile: 12px;
+$font-size-mobile: 18px;
 $mobile: 767px;
 $tablet: 991px;
 $desktop: 1440px;
@@ -19,6 +19,9 @@ $desktop-large: 2200px;
 @import 'components/header';
 @import 'components/footer';
 @import 'components/buttons';
+@import 'components/cards';
+@import 'components/forms';
+@import 'components/accordion';
 @import 'pages/home';
 * {
     -webkit-font-smoothing: antialiased;
@@ -84,13 +87,18 @@ h4,
 h5,
 h6 {
     font-family: 'NHaasGrotesk-Regular', sans-serif;
+    font-weight: 400;
 }
 
 h1 {
-    font-size: 46px;
+    font-size: 42px;
     line-height: 53px;
     margin-bottom: 1rem;
     margin-top: .8rem;
+    &.sub {
+        font-size: 25px;
+        line-height: 38px;
+    }
 }
 
 li,
@@ -121,6 +129,9 @@ marquee {
 
 section {
     border-bottom: 1px solid $white;
+    &.noborder {
+        border: none;
+    }
 }
 
 //classes

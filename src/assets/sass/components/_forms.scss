@@ -1,0 +1,16 @@
+form {
+    input,
+    textarea {
+        width: 100%;
+        padding: 1rem;
+        font-size: $font-size-mobile;
+        background: transparent;
+        color: $white;
+        border: none;
+        border-bottom: 1px solid $white;
+        appearance: none;
+        -webkit-appearance: none;
+        outline: none;
+        font-family: 'NHaasGrotesk-Regular', sans-serif;
+    }
+}

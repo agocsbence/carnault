@@ -1,0 +1,41 @@
+.card {
+    &.card-package {
+        border: 1px solid white;
+        border-radius: 1rem;
+        padding: 1rem;
+        .card-info {
+            font-size: $font-size-mobile;
+        }
+    }
+    &.card-playground {
+        .flavour,
+        .middle-part,
+        .battery {
+            display: flex;
+            justify-content: center;
+            color: $black;
+            position: relative;
+        }
+        .name {
+            position: absolute;
+            left: 1rem;
+        }
+        .image {
+            img {
+                display: block;
+            }
+        }
+        .battery {
+            padding-bottom: 4rem;
+            .name {
+                bottom: 2rem;
+            }
+        }
+        .flavour {
+            padding-top: 4rem;
+            .name {
+                top: 2rem;
+            }
+        }
+    }
+}
