@@ -1,0 +1,1 @@
+"use strict";var hamburger=document.querySelector(".hamburger"),nav=document.querySelector(".mobile-nav"),body=document.querySelector("body");hamburger.addEventListener("click",function(){hamburger.classList.toggle("is-active"),nav.classList.toggle("opened"),body.classList.toggle("lock-scroll")});
