@@ -55,43 +55,45 @@
     </div>
 </nav>
     
-    <div class="container mb-2">
-        <h1 class="sub mb-1">MARIETTA VARGA x Carnault</h1>
-        <p>About the project</p>
-        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores.</p>
+    <div class="container">
+        <h1 class="sub">About</h1>
     </div>
     <section class="pb-4 noborder">
         <div class="container">
-            <div class="flex flex-column">
-                <img src="images/collab/collab-11.png" alt="">
-                <img src="images/collab/collab-12.png" alt="">
-                <img src="images/collab/collab-13.png" alt="">
-                <img src="images/collab/collab-14.png" alt="">
+            <img src="images/about.png" alt="Carnault Team">
+            <div class="grid grid-2 grid-m-1">
+                <h1 class="my-3">We believe that every smoker is capable of quitting.</h1>
+                <p>#TeamCarnault</p>
             </div>
-            <div class="grid grid-2 grid-m-1 mb-2">
-                <div class="mt-2">
-                    <p>About Marietta Varga</p>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores.</p>
-                </div>
-                <div class="mt-2">
-                    <p>Carnault - Name</p>
-                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed qua consequuntur magni dolores.</p>
-                    <img src="images/collab/collab-11-carnault.png" alt="" class="my-2">
-                </div>
-            </div>
-            <div class="flex flex-row flex-space-between flex-row-center">
-                <p>Size</p>
-                <p>8,4mm x 97mm</p>
-            </div>
-            <div class="flex flex-row flex-space-between flex-row-center">
-                <p>Material</p>
-                <p>Stainless Steel + Cocobolo</p>
-            </div>
-            <div class="flex flex-row flex-space-between flex-row-center">
-                <p>Color</p>
-                <p>Silver + Red</p>
-            </div>
+        </div>
     </section>
+    <section class="pb-4 noborder">
+        <div class="container">
+            <div class="grid grid-2 grid-m-1">
+                <h1 class="mb-2">Departure into a new world</h1>
+                <p>We believe that every smoker is capable of quitting nicotine and physiologically it takes less than two weeks to do so. Like every departure it might be sad at first, so it is important that at the same time we embark into an exciting new world that awaits us:</p>
+                <p>In this world, it should be possible to follow whatever we care for, start one's own business with likeminded people, set out to travel and making new friends along the way, stand in for our interests and convictions more strongly and being bald or authentic where we weren't before. We want to depict a world where you can see clearly, a world which is colorful, filled with life and excitement and personal freedom, a world which is mature yet remains a playful and mysterious place. And because it's life it is complicated, and we might fall back into old </p>
+            </div>
+            <img src="images/about.png" alt="Carnault Team">
+        </div>
+    </section>
+
+    <script>
+    var accordionToggle = document.getElementsByClassName('accordion-header');
+    var i;
+
+    for (i = 0; i < accordionToggle.length; i++) {
+        accordionToggle[i].addEventListener('click', function() {
+            var icon = this.getElementsByTagName('span');
+            this.classList.toggle('opened');
+            if(this.classList.contains('opened')) {
+                icon[0].innerHTML = '-';
+            } else {
+                icon[0].innerHTML = '+';
+            }
+        });
+    }
+</script>
 
     <footer class="py-3">
     <div class="container">
