@@ -17,33 +17,49 @@ selected2.addEventListener('click', function() {
 for(i=0; i<colors1.length; i++) {
     colors1[i].addEventListener('click', function() {
         var bg = this.dataset.bg;
-        var clickedIndex = this.id.substr(this.id.length - 1);
+        var clickedIndex = this.id.substr(this.id.length - 2);
+        var slideToIndex = clickedIndex - 1;
         selected1.style.background = 'url(' + bg + ')';
         selected1.classList.remove('opened');
-        batterySwiper1.slideTo(clickedIndex, 400, true);
+        batterySwiper1.slideTo(slideToIndex, 400, true);
     })
 }
 
 for(j=0; j<colors2.length; j++) {
     colors2[j].addEventListener('click', function() {
         var bg = this.dataset.bg;
-        var clickedIndex = this.id.substr(this.id.length - 1);
+        var clickedIndex = this.id.substr(this.id.length - 2);
+        var slideToIndex = clickedIndex - 1;
         selected2.style.background = 'url(' + bg + ')';
         selected2.classList.remove('opened');
-        batterySwiper2.slideTo(clickedIndex, 400, true);
+        if(slideToIndex == colors2.length) {
+            batterySwiper2.slideTo(clickedIndex, 400, true);    
+        } else {
+            batterySwiper2.slideTo(slideToIndex, 400, true);
+        }
     })
 }
 
 batterySwiper1.on('activeIndexChange', function() {
-    var activeIndex = this.activeIndex;
+    var activeIndexValue = this.activeIndex + 1;
+    if(activeIndexValue == 10) {
+        var activeIndex = activeIndexValue;
+    } else {
+        var activeIndex = '0'+activeIndexValue;
+    }
     var activeSlide = document.querySelector('#c-1-'+activeIndex);
     selected1.style.background = 'url(' + activeSlide.dataset.bg + ')';
 })
 
 batterySwiper2.on('activeIndexChange', function() {
-    var activeIndex = this.activeIndex;
-    var activeSlide = document.querySelector('#c-2-'+activeIndex);
-    selected2.style.background = 'url(' + activeSlide.dataset.bg + ')';
+    var activeIndexValue = this.activeIndex + 1;
+    if(activeIndexValue == 10) {
+        var activeIndex = activeIndexValue;
+    } else {
+        var activeIndex = '0'+activeIndexValue;
+    }
+    var activeSlide = document.querySelector('#c-1-'+activeIndex);
+    selected1.style.background = 'url(' + activeSlide.dataset.bg + ')';
 })
 
 </script>
