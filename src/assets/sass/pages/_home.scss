@@ -41,6 +41,23 @@
     p {
         padding-bottom: 1.5rem;
     }
+    @media screen and (min-width: $tablet) {
+        .btn {
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            width: 70%;
+            justify-self: end;
+        }
+        p {
+            margin-top: 3rem;
+        }
+        h1 {
+            margin: 0;
+            padding: 0;
+        }
+    }
 }
 
 #packageSwiper {
@@ -66,6 +83,14 @@
 }
 
 #home-collaboration {
+    .collaborations {
+        @media screen and (min-width: $tablet) {
+            &.collaborations-masonry {
+                columns: 2;
+                column-gap: 1rem;
+            }
+        }
+    }
     .collaborator {
         .title {
             font-size: 18px;

@@ -20,7 +20,7 @@
         <a href="index.html">Carnault</a>
     </div>
     <div class="header-content flex flex-row">
-        <div class="desktop-only header-menu">
+        <div class="desktop-only header-menu flex flex-row flex-space-between">
             <a href="webshop.html">Webshop</a>
             <a href="laboratory.html">Laboratory</a>
             
@@ -58,7 +58,8 @@
     <section id="home-hero">
     <marquee behavior="" direction="">presale! order all product with 30% discount!</marquee>
     <div class="container">
-        <img src="images/hero.jpg" alt="">
+        <img src="images/hero.jpg" alt="Carnault" class="mobile-only">
+        <img src="images/hero-desktop.png" alt="Carnault" class="desktop-only">
         <h1>The Cigarette Without Borders</h1>
         <div class="flex flex-row">
             <div class="img">
@@ -66,9 +67,9 @@
             </div>
             <p>Basel, Switzerland</p>
         </div>
-        <div class="grid grid-2">
-            <a href="" class="btn">About Us</a>
-            <a href="" class="btn">Product info</a>
+        <div class="grid grid-2 mobile-only">
+            <a href="about.html" class="btn mb-1">About Us</a>
+            <a href="webshop.html" class="btn">Product info</a>
         </div>
     </div>
 </section>  
@@ -76,7 +77,7 @@
     <div class="swiper homeSwiper">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img src="images/carnault-1.png" alt="">
+                <img src="images/carnault-9.png" alt="">
             </div>
             <div class="swiper-slide">
                 <img src="images/carnault-2.png" alt="">
@@ -91,19 +92,34 @@
                 <img src="images/carnault-5.png" alt="">
             </div>
             <div class="swiper-slide">
-                <img src="images/carnault-6.png" alt="">
+                <img src="images/carnault-9.png" alt="">
             </div>
             <div class="swiper-slide">
-                <img src="images/carnault-7.png" alt="">
+                <img src="images/carnault-2.png" alt="">
             </div>
             <div class="swiper-slide">
-                <img src="images/carnault-8.png" alt="">
+                <img src="images/carnault-3.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-4.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-5.png" alt="">
             </div>
             <div class="swiper-slide">
                 <img src="images/carnault-9.png" alt="">
             </div>
             <div class="swiper-slide">
-                <img src="images/carnault-10.png" alt="">
+                <img src="images/carnault-2.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-3.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-4.png" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/carnault-5.png" alt="">
             </div>
         </div>
     </div>
@@ -119,6 +135,12 @@
             disableOnInteraction: false,
         },
         speed: 5000,
+        breakpoints: {
+            991: {
+                slidesPerView: 15,
+                spaceBetween: 20
+            }
+        }
     });
 
     var packageSwiper = new Swiper(".packageSwiper", {
@@ -130,9 +152,11 @@
 </script>
     <section id="home-moment">
     <div class="container">
-        <h1>A moment to share</h1>
-        <p>Each starter kit is always equipped with two Carnault cigarettes making it easy to share with the people you love.</p>
-        <a href="webshop.html" class="btn">Go to webshop</a>
+        <div class="grid grid-2 grid-m-1">
+            <h1>A moment to share</h1>
+            <p>Each starter kit is always equipped with two Carnault cigarettes making it easy to share with the people you love.</p>
+            <a href="webshop.html" class="btn">Go to webshop</a>
+        </div>
     </div>
 </section>
     <section id="packageSwiper" class="mobile-only">
@@ -159,11 +183,13 @@
     <section id="home-collaboration" class="mt-4">
     <div class="container">
         <h1>Collaboration</h1>
-        <p>Carnault + YOU</p>
-        <p>We believe that every smoker is capable of quitting nicotine and physiologically it takes less than two weeks to do so. Like every departure.</p>
-        <div class="collaborations">
+        <div class="text-block mobile-only">
+            <p>Carnault + YOU</p>
+            <p>We believe that every smoker is capable of quitting nicotine and physiologically it takes less than two weeks to do so. Like every departure.</p>
+        </div>
+        <div class="collaborations collaborations-masonry">
             <div class="collaborator pb-3">
-                <img src="images/collab-1.jpg" alt="">
+                <img src="images/collab/collab-1.png" alt="">
                 <div class="grid grid-2 mt-1">
                     <div class="title">
                         <p class="name">Kevin Zhegu</p>
@@ -171,12 +197,12 @@
                         <p>2021</p>
                     </div>
                     <div class="button">
-                        <a href="" class="btn">Explore</a>
+                        <a href="collab-single.html" class="btn">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="collaborator pb-3">
-                <img src="images/collab-1.jpg" alt="">
+                <img src="images/collab/collab-2.png" alt="">
                 <div class="grid grid-2 mt-1">
                     <div class="title">
                         <p class="name">Kevin Zhegu</p>
@@ -184,12 +210,12 @@
                         <p>2021</p>
                     </div>
                     <div class="button">
-                        <a href="" class="btn">Explore</a>
+                        <a href="collab-single.html" class="btn">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="collaborator pb-3">
-                <img src="images/collab-1.jpg" alt="">
+                <img src="images/collab/collab-3.png" alt="">
                 <div class="grid grid-2 mt-1">
                     <div class="title">
                         <p class="name">Kevin Zhegu</p>
@@ -197,12 +223,12 @@
                         <p>2021</p>
                     </div>
                     <div class="button">
-                        <a href="" class="btn">Explore</a>
+                        <a href="collab-single.html" class="btn">Explore</a>
                     </div>
                 </div>
             </div>
             <div class="collaborator pb-3">
-                <img src="images/collab-1.jpg" alt="">
+                <img src="images/collab/collab-4.png" alt="">
                 <div class="grid grid-2 mt-1">
                     <div class="title">
                         <p class="name">Kevin Zhegu</p>
@@ -210,7 +236,7 @@
                         <p>2021</p>
                     </div>
                     <div class="button">
-                        <a href="" class="btn">Explore</a>
+                        <a href="collab-single.html" class="btn">Explore</a>
                     </div>
                 </div>
             </div>

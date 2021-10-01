@@ -1,5 +1,6 @@
 $black: #000;
 $white: #fff;
+$yellow: #FFD600;
 $font-size: 14px;
 $font-size-mobile: 18px;
 $mobile: 767px;
@@ -137,7 +138,7 @@ section {
 
 //classes
 .container {
-    max-width: 960px;
+    max-width: calc(100% - 2rem);
     margin: 0 auto;
     position: relative;
     @media screen and (max-width: $tablet) {
@@ -166,16 +167,14 @@ section {
 }
 
 .mobile-only {
-    display: none;
-    @media screen and (max-width: $tablet) {
-        display: block;
+    @media screen and (min-width: $tablet) {
+        display: none !important;
     }
 }
 
 .desktop-only {
-    display: block;
     @media screen and (max-width: $tablet) {
-        display: none;
+        display: none !important;
     }
 }
 

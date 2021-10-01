@@ -1,16 +1,43 @@
 .card {
     &.card-package {
-        border: 1px solid white;
+        border: 1px solid $white;
         border-radius: 1rem;
         padding: 1rem;
+        &.package-coming {
+            border-color: #ffffff50;
+            position: relative;
+            .card-info {
+                opacity: .5;
+            }
+            .alert-coming-soon {
+                position: absolute;
+                top: 40%;
+                left: 0;
+                width: 100%;
+                padding: 2rem 1rem;
+                text-align: center;
+                background: $yellow;
+                color: $black;
+                p {
+                    margin: 0;
+                    font-size: 27px;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                }
+            }
+        }
         .card-info {
             font-size: $font-size-mobile;
         }
     }
     &.card-playground {
+        @media screen and (min-width: $tablet) {
+            width: 31.7vw;
+        }
         .flavour,
         .middle-part,
-        .battery {
+        .battery,
+        .charger {
             display: flex;
             justify-content: center;
             color: $black;
@@ -37,5 +64,25 @@
                 top: 2rem;
             }
         }
+        .charger {
+            padding: 5rem 0;
+            height: 100%;
+            .name {
+                top: 2rem;
+            }
+            .image {
+                align-self: stretch;
+                img {
+                    max-width: 70%;
+                    margin: 0 auto;
+                    // margin-top: 5vw;
+                }
+            }
+        }
     }
+}
+
+.pack-carnault {
+    padding-top: 1rem;
+    border-top: 1px solid $white;
 }
