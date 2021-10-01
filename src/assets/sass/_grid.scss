@@ -66,6 +66,9 @@
             grid-template-columns: 1fr 2fr;
         }
     }
+    &.grid-gap-half {
+        grid-gap: .5rem;
+    }
 }
 
 .flex {
