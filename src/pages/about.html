@@ -2,25 +2,29 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="sub">About</h1>
+        <h1 class="sub mobile-only">About</h1>
+        <h1 class="desktop-only">About</h1>
     </div>
-    <section class="pb-4 noborder">
+    <section class="pb-4 noborder border-d">
         <div class="container">
-            <img src="images/about.png" alt="Carnault Team">
-            <div class="grid grid-2 grid-m-1">
-                <h1 class="my-3">We believe that every smoker is capable of quitting.</h1>
+            <img src="images/about.png" alt="Carnault Team" class="mobile-only">
+            <img src="images/about-desktop.png" alt="Carnault Team" class="desktop-only">
+            <div class="grid grid-2 grid-m-1 mt-2 mt-m-2">
+                <h1 class="my-3 mobile-only">We believe that every smoker is capable of quitting.</h1>
+                <h1 class="nomargin desktop-only">We believe that every smoker is capable of quitting.</h1>
                 <p>#TeamCarnault</p>
             </div>
         </div>
     </section>
     <section class="pb-4 noborder">
         <div class="container">
-            <div class="grid grid-2 grid-m-1">
-                <h1 class="mb-2">Departure into a new world</h1>
-                <p>We believe that every smoker is capable of quitting nicotine and physiologically it takes less than two weeks to do so. Like every departure it might be sad at first, so it is important that at the same time we embark into an exciting new world that awaits us:</p>
-                <p>In this world, it should be possible to follow whatever we care for, start one's own business with likeminded people, set out to travel and making new friends along the way, stand in for our interests and convictions more strongly and being bald or authentic where we weren't before. We want to depict a world where you can see clearly, a world which is colorful, filled with life and excitement and personal freedom, a world which is mature yet remains a playful and mysterious place. And because it's life it is complicated, and we might fall back into old </p>
+            <div class="grid grid-2 grid-m-1 my-3">
+                <h1 class="nomargin">Departure into a new world</h1>
+                <div class="text">
+                    <p>We believe that every smoker is capable of quitting nicotine and physiologically it takes less than two weeks to do so. Like every departure it might be sad at first, so it is important that at the same time we embark into an exciting new world that awaits us:</p>
+                    <p>In this world, it should be possible to follow whatever we care for, start one's own business with likeminded people, set out to travel and making new friends along the way, stand in for our interests and convictions more strongly and being bald or authentic where we weren't before. We want to depict a world where you can see clearly, a world which is colorful, filled with life and excitement and personal freedom, a world which is mature yet remains a playful and mysterious place. And because it's life it is complicated, and we might fall back into old </p>
+                </div>
             </div>
-            <img src="images/about.png" alt="Carnault Team">
         </div>
     </section>
 

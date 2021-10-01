@@ -45,6 +45,7 @@
     }
     &.grid-1-2 {
         grid-template-columns: 1fr;
+        grid-gap: 1rem;
         @media screen and (min-width: $tablet) {
             grid-template-columns: 1fr 2fr;
         }
@@ -58,6 +59,11 @@
     &.grid-m-1 {
         @media screen and (max-width: $tablet) {
             grid-template-columns: 1fr;
+        }
+    }
+    &.grid-m-1-2 {
+        @media screen and (max-width: $tablet) {
+            grid-template-columns: 1fr 2fr;
         }
     }
 }

@@ -133,6 +133,11 @@ section {
     border-bottom: 1px solid $white;
     &.noborder {
         border: none;
+        &.border-d {
+            @media screen and (min-width: $tablet) {
+                border-bottom: 1px solid $white;
+            }
+        }
     }
 }
 
