@@ -1,6 +1,4 @@
-## 🥤Gulp Boilerplate (4)
-
-A basic Gulp 4 boilerplate to get developing locally with a few helpful tools already set up.
+## Carnault website (gulp 4, nunjucks)
 
 Tasks included:
 
